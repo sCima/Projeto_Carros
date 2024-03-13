@@ -1,4 +1,87 @@
 package br.com.carros.modelos;
 
-public class Caminhao {
+import br.com.carros.combustiveis.Combustivel;
+
+public class Caminhao extends Veiculo {
+
+    private double litros, rendimentoCaminhao = 0, pesoCarga, tanque;
+    private int limiteTanque = 200, numEixos, limitePeso, limiteEixos = 10;
+    private Combustivel combustivel;
+
+    public Caminhao(String cor, String marca, String placa, double limiteVelocidade, int numEixos) {
+        super(cor, marca, placa, limiteVelocidade);
+        this.numEixos = numEixos;
+        this.limitePeso = this.numEixos * 1000;
+    }
+
+    public void adicionarCarga(double carga) {
+        if(pesoCarga + carga <= limitePeso) {
+            pesoCarga += carga;
+            System.out.printf("Carga adicionada: %.2fkg \n" +
+                    "Carga total: %.2fkg \n", carga, pesoCarga);
+        } else {
+
+            System.out.printf("Impossível adicionar a carga de %.2f kg pois o limite máximo será ultrapassado! \n" +
+                    "Foram carregados %.2fkg \n", carga, limitePeso - pesoCarga);
+            pesoCarga = limitePeso;
+            System.out.printf("Carga atual: %.2fkg \n", pesoCarga);
+
+        }
+        System.out.println();
+    }
+
+    public void adicionarEixo(int novoEixo) {
+        if(numEixos + novoEixo <= limiteEixos) {
+            numEixos += novoEixo;
+            limitePeso += (novoEixo  * 1000);
+        }
+        else {
+            numEixos = limiteEixos;
+            limitePeso = limiteEixos * 1000;
+            System.out.println("Numero maximo de eixos atingido");
+        }
+        System.out.println("Limite de peso: " + limitePeso);
+    }
+
+    public int cargaPesada() {
+        double teste = (pesoCarga / limitePeso) * 100;
+        if(teste <= 70 ) //ate 70% da capacidadade = sem perda de rendimento
+            return 1;
+        else if(teste <= 80) //entre 70% e 80% da capacidade = perde metade do rendimento
+            return 2;
+        else
+            return 3; //acima de 80% da capacidade  = perde 2/3 do rendimento
+    }
+
+    public void abastecer(Combustivel combustivel, double litros) {
+        if (tanque + litros <= limiteTanque) {
+            tanque += litros;
+        } else {
+            tanque = 200;
+            System.out.println("Tanque cheio");
+        }
+        this.combustivel = combustivel;
+    }
+
+    public void exibirRendimento() {
+        rendimentoCaminhao = combustivel.consumo(tanque) / cargaPesada();
+        System.out.printf("Tanque: %fl \nPeso: %.2fkg \nRendimento: %.2f Kms\n", tanque, pesoCarga, rendimentoCaminhao);
+    }
+
+    @Override
+    public void computadorDeBordo() {
+        String status;
+        if(estaLigado)
+            status = "ON";
+        else
+            status = "OFF";
+
+        System.out.printf("Status: %s \n" +
+                "Tanque: %.2fl \n" +
+                "Autonomia: %.2f km \n" +
+                "Marca: %s \n" +
+                "Cor: %s \n" +
+                "Placa: %s \n", status, tanque, rendimentoCaminhao, marca, cor, placa);
+    }
+
 }

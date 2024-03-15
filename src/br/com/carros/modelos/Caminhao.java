@@ -12,6 +12,7 @@ public class Caminhao extends Veiculo {
         super(cor, marca, placa, limiteVelocidade);
         this.numEixos = numEixos;
         this.limitePeso = this.numEixos * 1000;
+        this.hodometro = random.nextDouble()*30000;
     }
 
     public void adicionarCarga(double carga) {
@@ -76,12 +77,24 @@ public class Caminhao extends Veiculo {
         else
             status = "OFF";
 
+        String avisoOleo;
+        if(verificaTrocaOleo()) {
+            avisoOleo = "Troca de óleo necessária!";
+        }
+        else {
+            avisoOleo = "Troca de óleo não é necessária.";
+        }
         System.out.printf("Status: %s \n" +
+                "Hodômetro: %.2f \n" +
                 "Tanque: %.2fl \n" +
                 "Autonomia: %.2f km \n" +
                 "Marca: %s \n" +
                 "Cor: %s \n" +
-                "Placa: %s \n", status, tanque, rendimentoCaminhao, marca, cor, placa);
+                "Placa: %s \n" +
+                "Condição do óleo: %s \n", status, hodometro, tanque, rendimentoCaminhao, marca, cor, placa, avisoOleo);
     }
 
+    private boolean verificaTrocaOleo() {
+        return hodometro >= 15000;
+    }
 }

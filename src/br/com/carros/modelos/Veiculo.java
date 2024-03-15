@@ -5,13 +5,16 @@ import br.com.carros.combustiveis.Etanol;
 import br.com.carros.combustiveis.Gasolina;
 
 import java.util.Date;
+import java.util.Random;
 
 public class Veiculo {
     protected String cor, marca, placa;
     protected Date anoFabricacao;
     protected boolean estaLigado;
-    protected double velocidade, limiteVelocidade, tanque, autonomia;
+    protected double velocidade, limiteVelocidade, tanque, autonomia, hodometro;
 
+
+    Random random = new Random();
 
     public Veiculo(String cor, String marca, String placa, double limiteVelocidade) {
         this.cor = cor;
@@ -20,6 +23,7 @@ public class Veiculo {
         this.anoFabricacao = new Date();
         this.estaLigado = true;
         this.limiteVelocidade = limiteVelocidade;
+        this.hodometro = random.nextDouble()*9999;
     }
 
     public void ligar() {
@@ -47,7 +51,7 @@ public class Veiculo {
                 if (this.velocidade + valor <= limiteVelocidade) {
                     this.velocidade += valor;
                 } else {
-                    System.out.println("Quer voar?");
+                    System.out.println("ATENÇÃO: Velocidade máxima atingida");
                     this.velocidade = limiteVelocidade;
                 }
                 System.out.printf("\nVocê acelerou até: %.2f km/h \n", velocidade);
@@ -93,11 +97,24 @@ public class Veiculo {
         else
             status = "OFF";
 
+        String avisoOleo;
+        if(verificaTrocaOleo()) {
+            avisoOleo = "Troca de óleo necessária!";
+        }
+        else {
+            avisoOleo = "Troca de óleo não é necessária.";
+        }
         System.out.printf("Status: %s \n" +
+                "Hodômetro: %.2f \n" +
                 "Tanque: %.2fl \n" +
                 "Autonomia: %.2f km \n" +
                 "Marca: %s \n" +
                 "Cor: %s \n" +
-                "Placa: %s \n", status, tanque, autonomia, marca, cor, placa);
+                "Placa: %s \n" +
+                "Condição do óleo: %s \n", status, hodometro, tanque, autonomia, marca, cor, placa, avisoOleo);
+    }
+
+    private boolean verificaTrocaOleo() {
+        return hodometro >= 6000;
     }
 }

@@ -14,10 +14,10 @@ public class Main {
 
         Carro mercedes = new Carro("Vermelha", "Mercedes", "EYV-7325", 350.0);
 
-        /*mercedes.abastecer(50);
+        mercedes.abastecer(50);
         mercedes.ligar();
         mercedes.desligar();
-        mercedes.ligar();
+        //mercedes.ligar(); // teste
         System.out.println();
         mercedes.acelerar(325);
         mercedes.freiar(25);
@@ -27,11 +27,12 @@ public class Main {
         System.out.println();
         mercedes.computadorDeBordo();
         System.out.println();
-        mercedes.ligar();
         mercedes.acelerar(250);
-        mercedes.freiar(50);*/
+        mercedes.freiar(350);
+        //mercedes.ligarArCondicionado();
+        mercedes.ajustarTemperaturaArCondicionado(29);
 
-        /*Caminhao scania = new Caminhao("Amarelo", "Scania", "CPO1234", 150, 2);
+        /*Caminhao scania = new Caminhao("Amarelo", "Scania", "CPO-1234", 150, 2);
 
         System.out.println();
 
@@ -44,6 +45,6 @@ public class Main {
 
         scania.exibirRendimento();
         System.out.println();
-        scania.computadorDeBordo();*/
+        scania.computadorDeBordo();*/  // override
     }
 }

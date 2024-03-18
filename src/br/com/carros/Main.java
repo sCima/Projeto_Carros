@@ -2,7 +2,6 @@ package br.com.carros;
 
 import br.com.carros.combustiveis.Etanol;
 import br.com.carros.combustiveis.Gasolina;
-import br.com.carros.combustiveis.Diesel;
 import br.com.carros.combustiveis.Alcool;
 import br.com.carros.modelos.Caminhao;
 import br.com.carros.modelos.Carro;
@@ -13,7 +12,6 @@ public class Main {
 
         Etanol etanol = new Etanol();
         Gasolina gasolina = new Gasolina();
-        Diesel diesel = new Diesel();
         Alcool alcool = new Alcool();
 
         Carro mercedes = new Carro("Vermelha", "Mercedes", "EYV-7325", 350.0);
@@ -33,13 +31,13 @@ public class Main {
         mercedes.acelerar(250);
         mercedes.freiar(350);
         //mercedes.ligarArCondicionado();
-        mercedes.ajustarTemperaturaArCondicionado(29);*/
+       mercedes.ajustarTemperaturaArCondicionado(29);*/
 
         /*System.out.println();
         
         Caminhao scania = new Caminhao("Amarelo", "Scania", "CPO-1234", 150, 2);
 
-        scania.abastecer(diesel, 100);
+        scania.abastecer(100);
         scania.adicionarCarga(1000);
         scania.adicionarCarga(1500);
         scania.adicionarEixo(1);

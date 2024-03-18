@@ -1,12 +1,9 @@
-package br.com.carros.modelos;
-
-import br.com.carros.combustiveis.Combustivel;
+package modelos;
 
 public class Caminhao extends Veiculo {
 
     private double litros, rendimentoCaminhao = 0, pesoCarga, tanque;
     private int limiteTanque = 200, numEixos, limitePeso, limiteEixos = 10;
-    private Combustivel combustivel;
 
     public Caminhao(String cor, String marca, String placa, double limiteVelocidade, int numEixos) {
         super(cor, marca, placa, limiteVelocidade);
@@ -54,18 +51,17 @@ public class Caminhao extends Veiculo {
             return 3; //acima de 80% da capacidade  = perde 2/3 do rendimento
     }
 
-    public void abastecer(Combustivel combustivel, double litros) {
+    public void abastecer(double litros) {
         if (tanque + litros <= limiteTanque) {
             tanque += litros;
         } else {
             tanque = 200;
             System.out.println("Tanque cheio");
         }
-        this.combustivel = combustivel;
     }
 
     public void exibirRendimento() {
-        rendimentoCaminhao = combustivel.consumo(tanque) / cargaPesada();
+        rendimentoCaminhao = (tanque * 9) / cargaPesada();
         System.out.printf("Tanque: %.2fl \nPeso: %.2fkg \nRendimento: %.2f Kms\n", tanque, pesoCarga, rendimentoCaminhao);
     }
 

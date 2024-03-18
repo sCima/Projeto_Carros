@@ -23,7 +23,7 @@ public class Caminhao extends Veiculo {
         } else {
 
             System.out.printf("Impossível adicionar a carga de %.2f kg pois o limite máximo será ultrapassado! \n" +
-                    "Foram carregados %.2fkg \n", carga, limitePeso - pesoCarga);
+                    "Foram carregados apenas %.2fkg \n", carga, limitePeso - pesoCarga);
             pesoCarga = limitePeso;
             System.out.printf("Carga atual: %.2fkg \n", pesoCarga);
 
@@ -66,7 +66,7 @@ public class Caminhao extends Veiculo {
 
     public void exibirRendimento() {
         rendimentoCaminhao = combustivel.consumo(tanque) / cargaPesada();
-        System.out.printf("Tanque: %fl \nPeso: %.2fkg \nRendimento: %.2f Kms\n", tanque, pesoCarga, rendimentoCaminhao);
+        System.out.printf("Tanque: %.2fl \nPeso: %.2fkg \nRendimento: %.2f Kms\n", tanque, pesoCarga, rendimentoCaminhao);
     }
 
     @Override

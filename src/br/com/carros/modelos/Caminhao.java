@@ -1,4 +1,4 @@
-package modelos;
+package br.com.carros.modelos;
 
 public class Caminhao extends Veiculo {
 
@@ -61,7 +61,7 @@ public class Caminhao extends Veiculo {
     }
 
     public void exibirRendimento() {
-        rendimentoCaminhao = (tanque * 9) / cargaPesada();
+        rendimentoCaminhao = (tanque * 9) / cargaPesada(); //Diesel
         System.out.printf("Tanque: %.2fl \nPeso: %.2fkg \nRendimento: %.2f Kms\n", tanque, pesoCarga, rendimentoCaminhao);
     }
 

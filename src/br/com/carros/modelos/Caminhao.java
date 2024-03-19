@@ -95,7 +95,8 @@ public class Caminhao extends Veiculo {
                 "Cor: %s \n" +
                 "Placa: %s \n" +
                 "Condição do óleo: %s \n" +
-                "Número do chassis: %s \n", status, hodometro, tanque, pesoCarga, autonomia, marca, cor, placa, avisoOleo, numeroChassi);
+                "Número do chassis: %s \n" +
+                "Ano de fabricação: %s \n", status, hodometro, tanque, pesoCarga, autonomia, marca, cor, placa, avisoOleo, numeroChassi, anoFabricacao.getYear()+1900);
     }
 
     private boolean verificaTrocaOleo() {

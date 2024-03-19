@@ -45,7 +45,7 @@ public class Main {
         scania.adicionarCarga(1000);
         scania.adicionarCarga(1500);
         scania.adicionarEixo(1);
-        scania.adicionarCarga(300);
+        scania.adicionarCarga(500);
         
         scania.acelerar(50);
         System.out.println();

@@ -1,12 +1,14 @@
 package br.com.carros.modelos;
 
+import br.com.carros.combustiveis.Combustivel;
+
 public class Caminhao extends Veiculo {
 
     private double litros, rendimentoCaminhao = 0, pesoCarga, tanque;
     private int limiteTanque = 200, numEixos, limitePeso, limiteEixos = 10;
 
-    public Caminhao(String cor, String marca, String placa, double limiteVelocidade, int numEixos) {
-        super(cor, marca, placa, limiteVelocidade);
+    public Caminhao(String cor, String marca, String placa, double limiteVelocidade, int numEixos, Combustivel combustivel) {
+        super(cor, marca, placa, limiteVelocidade, combustivel);
         this.numEixos = numEixos;
         this.limitePeso = this.numEixos * 1000;
         this.hodometro = random.nextDouble()*30000;
@@ -68,16 +70,15 @@ public class Caminhao extends Veiculo {
     @Override
     public void computadorDeBordo() {
         String status;
-        if(estaLigado)
+        if (estaLigado)
             status = "ON";
         else
             status = "OFF";
 
         String avisoOleo;
-        if(verificaTrocaOleo()) {
+        if (verificaTrocaOleo()) {
             avisoOleo = "Troca de óleo necessária!";
-        }
-        else {
+        } else {
             avisoOleo = "Troca de óleo não é necessária.";
         }
         System.out.printf("Status: %s \n" +
@@ -87,7 +88,8 @@ public class Caminhao extends Veiculo {
                 "Marca: %s \n" +
                 "Cor: %s \n" +
                 "Placa: %s \n" +
-                "Condição do óleo: %s \n", status, hodometro, tanque, rendimentoCaminhao, marca, cor, placa, avisoOleo);
+                "Condição do óleo: %s \n" +
+                "Número do chassis: %s \n", status, hodometro, tanque, autonomia, marca, cor, placa, avisoOleo, numeroChassi);
     }
 
     private boolean verificaTrocaOleo() {

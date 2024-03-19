@@ -1,11 +1,13 @@
 package br.com.carros.modelos;
 
+import br.com.carros.combustiveis.Combustivel;
+
 public class Carro extends Veiculo {
     private boolean vidroEletricoFrontal, vidroEletricoTraseiro, arCondicionado;
     private double temperatura = 23;
 
-    public Carro(String cor, String marca, String placa, double limiteVelocidade) {
-        super(cor, marca, placa, limiteVelocidade);
+    public Carro(String cor, String marca, String placa, double limiteVelocidade, Combustivel combustivel) {
+        super(cor, marca, placa, limiteVelocidade, combustivel);
         this.vidroEletricoFrontal = false;
         this.vidroEletricoTraseiro = false;
         this.arCondicionado = false;

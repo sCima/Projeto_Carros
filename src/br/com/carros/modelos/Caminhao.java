@@ -1,11 +1,13 @@
 package br.com.carros.modelos;
 
 import br.com.carros.combustiveis.Combustivel;
+import br.com.carros.combustiveis.Diesel;
 
 public class Caminhao extends Veiculo {
 
-    private double litros, rendimentoCaminhao = 0, pesoCarga, tanque;
+    private double rendimentoCaminhao = 0, pesoCarga, tanque;
     private int limiteTanque = 200, numEixos, limitePeso, limiteEixos = 10;
+
 
     public Caminhao(String cor, String marca, String placa, double limiteVelocidade, int numEixos, Combustivel combustivel) {
         super(cor, marca, placa, limiteVelocidade, combustivel);
@@ -15,12 +17,11 @@ public class Caminhao extends Veiculo {
     }
 
     public void adicionarCarga(double carga) {
-        if(pesoCarga + carga <= limitePeso) {
+        if (pesoCarga + carga <= limitePeso) {
             pesoCarga += carga;
             System.out.printf("Carga adicionada: %.2fkg \n" +
                     "Carga total: %.2fkg \n", carga, pesoCarga);
         } else {
-
             System.out.printf("Impossível adicionar a carga de %.2f kg pois o limite máximo será ultrapassado! \n" +
                     "Foram carregados apenas %.2fkg \n", carga, limitePeso - pesoCarga);
             pesoCarga = limitePeso;
@@ -53,22 +54,26 @@ public class Caminhao extends Veiculo {
             return 3; //acima de 80% da capacidade  = perde 2/3 do rendimento
     }
 
+    @Override
     public void abastecer(double litros) {
-        if (tanque + litros <= limiteTanque) {
-            tanque += litros;
-        } else {
-            tanque = 200;
-            System.out.println("Tanque cheio");
-        }
+        if (combustivel instanceof Diesel)
+            if (tanque + litros <= limiteTanque) {
+                tanque += litros;
+            } else {
+                tanque = 200;
+                System.out.println("Tanque cheio");
+            }
+        else
+            System.out.println("Impossivel abastecer pois o combustivel é incompativel");
     }
 
-    public void exibirRendimento() {
-        rendimentoCaminhao = (tanque * 9) / cargaPesada(); //Diesel
-        System.out.printf("Tanque: %.2fl \nPeso: %.2fkg \nRendimento: %.2f Kms\n", tanque, pesoCarga, rendimentoCaminhao);
+    private void rendimento() {
+        autonomia = combustivel.consumo(tanque) / cargaPesada();
     }
 
     @Override
     public void computadorDeBordo() {
+        rendimento();
         String status;
         if (estaLigado)
             status = "ON";
@@ -84,15 +89,38 @@ public class Caminhao extends Veiculo {
         System.out.printf("Status: %s \n" +
                 "Hodômetro: %.2f \n" +
                 "Tanque: %.2fl \n" +
+                "Peso: %.2fkg \n" +
                 "Autonomia: %.2f km \n" +
                 "Marca: %s \n" +
                 "Cor: %s \n" +
                 "Placa: %s \n" +
                 "Condição do óleo: %s \n" +
-                "Número do chassis: %s \n", status, hodometro, tanque, autonomia, marca, cor, placa, avisoOleo, numeroChassi);
+                "Número do chassis: %s \n", status, hodometro, tanque, pesoCarga, autonomia, marca, cor, placa, avisoOleo, numeroChassi);
     }
 
     private boolean verificaTrocaOleo() {
         return hodometro >= 15000;
+    }
+
+    @Override
+    public void acelerar(double valor) {
+        if (estaLigado) {
+            if (this.tanque >= 1) {
+                tanque -= tanque / valor;
+                if (this.velocidade + valor <= limiteVelocidade) {
+                    this.velocidade += valor;
+                } else {
+                    System.out.println("ATENÇÃO: Velocidade máxima atingida");
+                    this.velocidade = limiteVelocidade;
+                }
+                System.out.printf("Você acelerou até: %.2f km/h \n", velocidade);
+            }
+        } else if (tanque >= 1) {
+            this.ligar();
+            System.out.println("ao tentar acelerar");
+            this.acelerar(valor);
+        } else {
+            System.out.println("Sem gasolina");
+        }
     }
 }

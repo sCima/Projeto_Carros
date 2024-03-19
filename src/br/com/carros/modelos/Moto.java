@@ -1,14 +1,18 @@
 package br.com.carros.modelos;
 
 import br.com.carros.combustiveis.Combustivel;
+import br.com.carros.modos.Baixo;
+import br.com.carros.modos.Medio;
+import br.com.carros.modos.ModoGuidao;
 
 public class Moto extends Veiculo {
-    private boolean pezinho, desativarPezinho, buzina;
+    private boolean pezinho;
+    private String guidao;
+    private double padraoVelocidade;
 
     public Moto(String cor, String marca, String placa, double limiteVelocidade, Combustivel combustivel) {
         super(cor, marca, placa, limiteVelocidade, combustivel);
         this.pezinho = false;
-        this.buzina = false;
     }
 
     public void apoiarPezinho() {
@@ -29,17 +33,30 @@ public class Moto extends Veiculo {
         }
     }
 
+    public void ajustarGuidao(ModoGuidao guidao){
+        padraoVelocidade = limiteVelocidade;
+        padraoVelocidade = guidao.modo(padraoVelocidade);
+        String posicaoGuidao;
+        if (guidao instanceof Baixo)
+            posicaoGuidao = "baixo";
+        else if (guidao instanceof Medio)
+            posicaoGuidao = "padrão";
+        else
+            posicaoGuidao = "alto";
+        System.out.println("Guidão ajustado para: " + posicaoGuidao + "\nNovo limite de velocidade: " + padraoVelocidade);
+    }
+
     @Override
     public void acelerar(double valor) {
         if (estaLigado) {
             if (!pezinho) {
                 if (tanque >= 1) {
                     tanque -= tanque / valor;
-                    if (this.velocidade + valor <= limiteVelocidade) {
+                    if (this.velocidade + valor <= padraoVelocidade) {
                         this.velocidade += valor;
                     } else {
                         System.out.println("ATENÇÃO: Velocidade máxima atingida");
-                        this.velocidade = limiteVelocidade;
+                        this.velocidade = padraoVelocidade;
                     }
                     System.out.printf("\nVocê acelerou até: %.2f km/h \n", velocidade);
                 }
@@ -54,21 +71,5 @@ public class Moto extends Veiculo {
             System.out.println("Sem gasolina");
         }
     }
-    /*public void desativarPezinho() {
-        this.desativarPezinho = !this.desativarPezinho;
-        if (this.desativarPezinho) {
-            System.out.println("pezinho nao apoiado");
-        } else {
-            System.out.println("pezinho apoiado");
-        }
-    }*/
 
-    /*public void buzina() {
-        this.buzina = !this.buzina;
-        if (this.buzina) {
-            System.out.println("BEE BEE!!!");
-        } else {
-
-        }
-    }*/
 }

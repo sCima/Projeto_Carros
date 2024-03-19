@@ -1,8 +1,7 @@
 package br.com.carros.modelos;
 
 import br.com.carros.combustiveis.Combustivel;
-import br.com.carros.combustiveis.Etanol;
-import br.com.carros.combustiveis.Gasolina;
+import br.com.carros.combustiveis.Diesel;
 
 import java.util.Date;
 import java.util.Random;
@@ -13,6 +12,7 @@ public class Veiculo {
     protected boolean estaLigado;
     protected double velocidade, limiteVelocidade, tanque, autonomia, hodometro;
     protected Combustivel combustivel;
+    protected Veiculo veiculo;
 
 
     Random random = new Random();
@@ -26,7 +26,7 @@ public class Veiculo {
         }
 
         // Números (descrição do veiculo e ano fabricação)
-        for (int i = 0; i< 7; i++) {
+        for (int i = 0; i < 7; i++) {
             sb.append(random.nextInt(10));
         }
 
@@ -73,15 +73,15 @@ public class Veiculo {
 
     public void acelerar(double valor) {
         if (estaLigado) {
-            if (tanque >= 1) {
+            if (this.tanque >= 1) {
                 tanque -= tanque / valor;
                 if (this.velocidade + valor <= limiteVelocidade) {
                     this.velocidade += valor;
                 } else {
-                    System.out.println("ATENÇÃO: Velocidade máxima atingida");
+                    System.out.println("\nATENÇÃO: Velocidade máxima atingida");
                     this.velocidade = limiteVelocidade;
                 }
-                System.out.printf("\nVocê acelerou até: %.2f km/h \n", velocidade);
+                System.out.printf("Você acelerou até: %.2f km/h \n", velocidade);
             }
         } else if (tanque >= 1) {
             this.ligar();
@@ -105,16 +105,28 @@ public class Veiculo {
     }
 
     public void abastecer(double litros) {
-        if (tanque + litros > 50) {
-            tanque = 50;
+        if (veiculo instanceof Caminhao) {
+            if (combustivel instanceof Diesel) {
+                if (tanque + litros <= 200) {
+                    tanque += litros;
+                } else {
+                    tanque = 200;
+                    System.out.println("Tanque cheio");
+                }
+            } else
+                System.out.println("Impossivel abastecer pois o combustivel é incompativel");
         } else {
-            tanque += litros;
+            if (tanque + litros > 50) {
+                tanque = 50;
+            } else {
+                tanque += litros;
+            }
         }
         System.out.println("Tanque: " + tanque + "l");
     }
 
-    private double rendimento() {
-        return autonomia = combustivel.consumo(tanque);
+    private void rendimento() {
+        autonomia = combustivel.consumo(tanque);
     }
 
     public void computadorDeBordo() {
